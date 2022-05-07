@@ -19,13 +19,21 @@ async function run() {
     try {
         await client.connect()
         const inventoryCollection = client.db('inventoryItems').collection('items')
-        console.log("db connected");  
+        const addedCollection = client.db('inventoryItems').collection('addedItems')
+        console.log("db connected");
 
-        // Inventory API
+        // Inventory Get API
         app.get('/inventories', async(req, res) => {
             const query = {}
             const cursor = inventoryCollection.find(query)
             const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        // Added Items Post API
+        app.post('/addedItems', async (req, res) => {
+            const addedItem = req.body
+            const result = await addedCollection.insertOne(addedItem)
             res.send(result)
         })
     }
