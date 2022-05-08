@@ -80,6 +80,19 @@ async function run() {
             const result = await inventoryCollection.updateOne(filter, updateDoc, options)
             res.send(result)
         })
+        // app.put('/inventories/:id', async(req, res) =>{
+        //     const newQuantity = req.body;
+        //     console.log(newQuantity);
+        //     const id = req.params.id; 
+        //     console.log(id);
+        //     const filter = {_id: ObjectId(id)};
+        //     const options = { upsert: true };
+        //     const updateDoc = {
+        //         $set: newQuantity,
+        //       };
+        //     const result = await inventoryCollection.updateOne(filter, updateDoc, options);
+        //     res.send(result)
+        // })
 
         // Added Items Post API
         app.post('/addedItems', async (req, res) => {
