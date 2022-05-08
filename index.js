@@ -23,7 +23,7 @@ function verifyJWT(req, res, next) {
         if (err) {
             return res.status(403).send({ massage: 'forbidded access' })
         }
-        console.log('decoded', decoded);
+        // console.log('decoded', decoded);
         req.decoded = decoded
         next()
     })
@@ -45,6 +45,24 @@ async function run() {
             const query = {}
             const cursor = inventoryCollection.find(query)
             const result = await cursor.toArray()
+            res.send(result)
+        })
+
+        // Inventory Single Item Get API
+        app.get('/inventories/:id', async (req, res) => {
+            const id = req.params.id
+            // console.log(id);
+            const query = { _id: ObjectId(id) }
+            const result = await inventoryCollection.findOne(query)
+            res.send(result)
+        })
+
+        // Inventory Single Item Delete API
+        app.delete('/inventories/:id', async (req, res) => {
+            const id = req.params.id
+            console.log(id);
+            const query = { _id: ObjectId(id) }
+            const result = await inventoryCollection.deleteOne(query)
             res.send(result)
         })
 
