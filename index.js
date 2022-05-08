@@ -66,6 +66,21 @@ async function run() {
             res.send(result)
         })
 
+        // Inventory Single Item Quantity Minus by 1
+        app.put('/inventories/:id', async (req, res) => {
+            const id = req.params.id
+            const updateItem = req.body
+            const filter = { _id: ObjectId(id) }
+            const options = {upsert: true}
+            const updateDoc = {
+                $set: {
+                    quantity: updateItem.newQuantity
+                }
+            }
+            const result = await inventoryCollection.updateOne(filter, updateDoc, options)
+            res.send(result)
+        })
+
         // Added Items Post API
         app.post('/addedItems', async (req, res) => {
             const addedItem = req.body
